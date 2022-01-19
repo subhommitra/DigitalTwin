@@ -1,3 +1,15 @@
+spin() {
+  local i=0
+  local sp='/-\|'
+  local n=${#sp}
+  printf ' '
+  sleep 0.1
+  while true; do
+    printf '\b%s' "${sp:i++%n:1}"
+    sleep 0.1
+  done
+}
+
 
 NAMESPACE=digital-twin
 CM_NAMESPACE=cert-manager
@@ -7,37 +19,11 @@ printf "\033[1mInstalling OLM\n"
 printf -- "------------------------\033[0m\n"
 curl -sL https://github.com/operator-framework/operator-lifecycle-manager/releases/download/v0.20.0/install.sh | bash -s v0.20.0
 
-
-#printf "\n"
-#printf "\033[1mInstalling Strimzi operator\n"
-#printf -- "------------------------\033[0m\n"
-
-#helm repo add strimzi https://strimzi.io/charts/
-#helm install kafka strimzi/strimzi-kafka-operator --namespace="${NAMESPACE}"
-
-#printf "\033[1mPostgres operator installed successfully.\033[0m\n"
-
-
-#printf "\n"
-#printf "\033[1mInstalling Zalando postgres-operator\n"
-#printf -- "------------------------\033[0m\n"
-# First, clone the repository and change to the directory
-#git clone https://github.com/zalando/postgres-operator.git
-#cd postgres-operator
-#git checkout v1.7.0
-
-#kubectl apply -f manifests/postgresql.crd.yaml
-#kubectl create -f manifests/configmap.yaml  # configuration
-#kubectl create -f manifests/operator-service-account-rbac.yaml  # identiy and permissions
-#kubectl create -f manifests/postgres-operator.yaml  # deployment
-#kubectl create -f manifests/api-service.yaml  # operator API to be used by UI
-#cd ..
-#rm -rf postgres-operator
-#printf "\033[1mPostgres operator installed successfully.\033[0m\n"
-
 printf "\n"
 printf "\033[1mInstalling Subscriptions for Keycloak operator, Strimzi, Postgres-operator \n"
-printf -- "------------------------\033[0m\n"
+printf -- "------------------------\033[0m "
+spin & spinpid=$!
+
 kubectl create ns ${NAMESPACE}
 kubectl create ns ${CM_NAMESPACE}
 
@@ -107,6 +93,8 @@ spec:
   sourceNamespace: olm
 EOF
 #kubectl create -f https://operatorhub.io/install/alpha/keycloak-operator.yaml   
+kill $spinpid
+printf "\n\n"
 printf "\033[1mSubscriptions installed successfully.\033[0m\n"
 
 printf -- "\033[1mOperators installed successfully.\033[0m\n"

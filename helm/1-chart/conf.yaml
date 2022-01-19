@@ -8,35 +8,16 @@ keycloakOperator:
     ADMIN_PASSWORD: admin
     ADMIN_USERNAME: admin
   keycloakAuthServer: http://keycloak-discovery:8080/auth
+
 postgresOperator:
   teamId: acid
   # clusterSvcName: name must begin with "<teamId>-"
   clusterSvcName: acid-minimal-cluster
   dbPassword: postgres
+
 strimzi:
   kafkaConnector:
     password: postgres
-imageCredentials:
-  username:
-  password:
-scorpioBroker:
-  keycloak_vars:
-    KEYCLOAK_SERVER_URL: http://keycloak-discovery:8080/auth
-  keycloakClientSecrets:
-    historyManagerSecret: notneeded
-    entityManagerSecret: notneeded
-    queryManagerSecret: notneeded
-    subscriptionManagerSecret: notneeded
-    registryManagerSecret: notneeded
-alerta:
-  alertaConfig:
-    DATABASE_URL = "postgresql://ngb:postgres@acid-minimal-cluster.digital-twin.svc.cluster.local:5432/monitoring"
-  alertaConfigSercrets:
-    OAUTH2_CLIENT_SECRET: hN12DT7LdfmFpwktGyDYn7m4IAIFhyzH
-    OAUTH2_CLIENT_ID: "alerta-ui"
-    KEYCLOAK_URL: http://keycloak-discovery:8080
-    KEYCLOAK_REALM: alerta
-    AUTH_PROVIDER: 'keycloak'
-    ALLOWED_KEYCLOAK_ROLES: ["admin", "user"]
-    AUTH_REQUIRED: "True"
-    SIGNUP_ENABLED: "False"
+  imageCredentials:
+    username:
+    password:

@@ -101,7 +101,7 @@ alertaConfig: |
   ADMIN_USERS = ['admin']
   USER_DEFAULT_SCOPES = ['read','write:alerts']
 
-alertaConfigSercrets:
+alertaConfigSecrets:
   OAUTH2_CLIENT_ID: alerta-ui
   OAUTH2_CLIENT_SECRET:
   #SECRET_KEY:
